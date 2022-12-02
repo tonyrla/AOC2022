@@ -1,6 +1,6 @@
 import sys
 
-from AOCRla import AOC
+from AOCRla.aoc import AOC
 
 class puzzle(AOC):
     def __init__(self, open_browser: bool = False):

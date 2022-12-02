@@ -1,7 +1,7 @@
 import sys
 from enum import IntEnum
 
-from AOCRla import AOC
+from AOCRla.aoc import AOC
 
 
 
@@ -34,7 +34,7 @@ class Points(IntEnum):
 class puzzle(AOC):
     def __init__(self, open_browser: bool = False):
         super().__init__(open_browser=open_browser)
-        self.input = self.get_input_data()
+        self.input: str = self.get_input_data()
 
     def part1(self) -> int|None:
         score = 0
@@ -51,38 +51,36 @@ class puzzle(AOC):
         return score
 
     def part2(self) -> int|None:
-        targets = {
-            "Z": Points.WIN,
-            "Y": Points.DRAW,
-            "X": Points.LOSE,
-        }
-        results = {
-            Points.LOSE : {
-                Points.ROCK: Points.SCISSORS.value,
-                Points.PAPER: Points.ROCK.value,
-                Points.SCISSORS: Points.PAPER.value,
+        # Python is a funny language, let's do this without the enums.
+        # Enums are easier to read, but this is more effective.
+        RESULTS = {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "X": 0,
+            "Y": 3,
+            "Z": 6,
+            0 : {
+                1: 3,
+                2: 1,
+                3: 2,
             },
-            Points.WIN : {
-                Points.ROCK: Points.PAPER.value,
-                Points.PAPER: Points.SCISSORS.value,
-                Points.SCISSORS: Points.ROCK.value,
+            3 : {
+                1: 1,
+                2: 2,
+                3: 3,
             },
-            Points.DRAW : {
-                Points.ROCK: Points.ROCK.value,
-                Points.PAPER: Points.PAPER.value,
-                Points.SCISSORS: Points.SCISSORS.value,
+            6 : {
+                1: 2,
+                2: 3,
+                3: 1,
             },
         }
 
-        score = 0
+        score: int = 0
         for line in self.input.splitlines():
-            opponent, me = line.split()
-
-            enemy_hand = Points.from_str(opponent)
-            target = targets[me]
-            score += target.value
-
-            score += results[target][enemy_hand]
+            enemy_hand, target = map(lambda x: RESULTS.get(x), line.split())
+            score += target + RESULTS[target][enemy_hand]
 
         return score
 
@@ -101,13 +99,12 @@ class puzzle(AOC):
 
 if __name__ == '__main__':
     """
-    After 12h I realised...You could just map the input straight to matching points.
+    After 12 hours I realised...You could just map the input straight to matching points.
 
     Hand x Result = Points
-    ROCK[A] vs ROCK[X] == DRAW == 1+3 = 4 -> A X = 4
-    Part1 :{ "A X":4 ...}
-
-    Part2 :{ "A X":3 ... }
+    ROCK[A] vs ROCK[X] == DRAW == 1+3 = 4 -> {'A X': 4, ...}
+    Part1 :{ "A X":4, ...,}
+    Part2 :{ "A X":3, ...,}
     """
     use_browser = False
 
@@ -120,10 +117,8 @@ if __name__ == '__main__':
 
     ol_part1 = p.part1_oneliner()
     assert ol_part1 == part1, f"Part 1 failed: {ol_part1}"
+    p.post_answer(1, part1)
 
     ol_part2 = p.part2_oneliner()
-    assert ol_part2 == part2, f"Part 1 failed: {ol_part2}"
-    #p.post_answer(1, part1)
-
-    # part2 = p.part2()
-    # p.post_answer(2, part2)
+    assert ol_part2 == part2, f"Part 2 failed: {ol_part2}"
+    p.post_answer(2, part2)
