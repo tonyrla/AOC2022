@@ -5,13 +5,12 @@ from AOCRla.aoc import AOC
 
 def get_priority(char: str) -> int:
     if char.islower():
-        bal = ord(char) - 96
-    else:
-        bal = ord(char) - 38
-    return bal
+        return ord(char) - 96
+    return ord(char) - 38
 
 def grouper(iterable: list[str]) -> list[list[str]]:
     return zip_longest(fillvalue=None, *([iter(iterable)] * 3))  # type: ignore
+
 class puzzle(AOC):
     def __init__(self, open_browser: bool = False):
         super().__init__(open_browser=open_browser)
@@ -36,11 +35,11 @@ class puzzle(AOC):
         return total
 
     def part1_oneliner(self) -> int|None:
-        return sum(ord(c) - 96 if c.islower() else ord(c) - 38 for c in [set(x[:int(len(x)/2)]).intersection(x[int(len(x)/2):]).pop() for x in open('./inputs/2022_03.txt').read().strip().split('\n')])
+        return sum(ord(c) - 96 if c.islower() else ord(c) - 38 for c in [set(x[:int(len(x)/2)]).intersection(x[int(len(x)/2):]).pop() for x in open('./inputs/2022_03.txt').read().strip().splitlines()])
 
 
     def part2_oneliner(self) -> int|None:
-        return sum(ord(c) - 96 if c.islower() else ord(c) - 38 for c in [set(groups[0]).intersection(groups[1],groups[2]).pop() for groups in zip_longest(fillvalue=None, *([iter(open('./inputs/2022_03.txt').read().strip().split('\n'))] * 3))])
+        return sum(ord(c) - 96 if c.islower() else ord(c) - 38 for c in [set(groups[0]).intersection(groups[1],groups[2]).pop() for groups in zip_longest(fillvalue=None, *([iter(open('./inputs/2022_03.txt').read().strip().splitlines())] * 3))])
 
 
 if __name__ == '__main__':
