@@ -2,9 +2,9 @@
 
 This repository contains my Python AOC utility and solutions to the [Advent of Code 2022](https://adventofcode.com/2022) challenges.
 
-![](https://img.shields.io/badge/day%20📅-3-blue)
-![](https://img.shields.io/badge/stars%20⭐-6-yellow)
-![](https://img.shields.io/badge/days%20completed-3-red)
+![](https://img.shields.io/badge/day%20📅-4-blue)
+![](https://img.shields.io/badge/stars%20⭐-8-yellow)
+![](https://img.shields.io/badge/days%20completed-4-red)
 ## Usage
 ### Session cookie to fetch inputs and submit answers
 *  Get your session cookie from [Advent of Code](https://adventofcode.com/) and save it in [./data/.secret_session_cookie](./data/.secret_session_cookie)
